@@ -6,6 +6,8 @@ import vuetify from './plugins/vuetify';
 import { iconsSet as icons } from './assets/icons/icons.js'
 import CoreuiVue from '@coreui/vue'
 import firebase from 'firebase'
+import { Datetime } from 'vue-datetime'
+import 'vue-datetime/dist/vue-datetime.css'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
@@ -22,13 +24,14 @@ firebase.initializeApp(firebaseConfig);
 
 Vue.use(CoreuiVue)
 Vue.use(require('vue-moment'))
+Vue.use(Datetime)
 
 
 new Vue({
   beforeCreate()
   {
      this.$store.dispatch("getMemberInfo");
-  },
+    },
   router,
   store,
   vuetify,

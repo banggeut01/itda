@@ -68,58 +68,19 @@
                 var idxLen = idx.length
                 for (var i = 0; i < idxLen; i++) {
                     var tidx = idx[i]
-                    var wid = this
-                        .recruitList[tidx]
-                        .wanted
-                        .wid
-                    var title = this
-                        .recruitList[tidx]
-                        .company
-                        .corpNm
-                    var start = this
-                        .recruitList[tidx]
-                        .wanted
-                        .startDate
-                        .substring(0, 10)
-                    var end = this
-                        .recruitList[tidx]
-                        .wanted
-                        .endDate
-                        .substring(0, 10)
-                    var wstack = this
-                        .recruitList[tidx]
-                        .stacks
-                    var jobType = this
-                        .recruitList[tidx]
-                        .wanted
-                        .jobType
+                    var wid = this.recruitList[tidx].wanted.wid
+                    var title = this.recruitList[tidx].company.corpNm
+                    var start = this.recruitList[tidx].wanted.startDate.substring(0, 10)
+                    var end = this.recruitList[tidx].wanted.endDate.substring(0, 10)
+                    var wstack = this.recruitList[tidx].stacks
+                    var jobType = this.recruitList[tidx].wanted.jobType
                     // 1 시작, 2 종료 3 모두
                     if (period !== 2) {
-                        this
-                            .calendarEvent
-                            .push({
-                                wid,
-                                title,
-                                color: "#7986CB",
-                                textColor: "white",
-                                start: start,
-                                wstack,
-                                jobType
-                            })
+                        this.calendarEvent.push({wid,title,color: "#7986CB",textColor: "white",start: start,wstack,jobType})
                     }
                     // 1 시작, 2 종료 0 모두
                     if (period !== 1) {
-                        this
-                            .calendarEvent
-                            .push({
-                                wid,
-                                title,
-                                color: "#FF8A65",
-                                textColor: "white",
-                                start: end,
-                                wstack,
-                                jobType
-                            })
+                        this.calendarEvent.push({wid,title,color: "#FF8A65",textColor: "white",start: end,wstack,jobType})
                     }
                 }
                 this.calendarEvent.sort(function(a, b){

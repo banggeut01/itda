@@ -1,0 +1,94 @@
+<template>
+    <v-container v-if="comments.length">
+        <v-row v-for="comment in comments" :key="comment.cmid">
+            <v-col cols="2" v-if="comment.uid == userInfo.user.uid" align-self="center">
+                <p>{{person[findPerson(comment.uid)-1].uname}}</p>
+                <v-img></v-img>
+            </v-col>
+            <v-col cols="8" sm="9" align-self="center">
+                {{comment.content}}
+                {{comment.createdAt}}
+            </v-col>
+            <v-col cols="1" align-self="center" style="cursor:pointer;"><v-icon>close</v-icon></v-col>
+            <v-col cols="2" v-if="comment.uid != userInfo.user.uid" align-self="center">
+                <p v-if="findPerson(comment.uid)">{{person[findPerson(comment.uid)-1].uname}}</p>
+                <p v-else>스터디를 탈퇴한 회원</p>
+            </v-col>
+        </v-row>
+        <v-row v-if="userInfo">
+            <v-col cols="2" align-self="center">
+                <p class="mb-0">{{userInfo.user.uname}}</p>
+            </v-col>
+            <v-col cols="10" align-self="center">
+                <v-textarea append-outer-icon="comment" v-model="newContent" rows="1" @click:append-outer.prevent="createComment" @keyup.enter.prevent="createComment"></v-textarea>
+            </v-col>
+        </v-row>
+    </v-container>
+    <v-container v-else>
+        <v-row>
+            <v-col>스터디 공지사항이 없습니다!</v-col>
+        </v-row>
+        <v-row v-if="userInfo">
+            <v-col cols="2" align-self="center">
+                <p class="mb-0">{{userInfo.user.uname}}</p>
+            </v-col>
+            <v-col cols="10" align-self="center">
+                <v-textarea append-outer-icon="comment" v-model="newContent" rows="1" @click:append-outer.prevent="createComment" @keyup.enter.prevent="createComment"></v-textarea>
+            </v-col>
+        </v-row>
+    </v-container>
+</template>
+
+<script >
+    import axios from 'axios'
+    import {mapState} from "vuex";
+    
+    export default {
+        data() {
+            return {
+                comments:[],
+                newContent:"",
+            }
+        },
+        props: {
+            stid: {type:Number},
+            person: {type:Array},
+        },
+        computed:{
+            ...mapState(["userInfo"])
+        },
+        mounted(){
+            this.getComments()
+        },
+        methods:{
+            findPerson(uid){
+                for (var i=0; i<this.person.length; i++){
+                    if (this.person[i].uid == uid){
+                        return i+1
+                        }
+                    }
+                return 0
+            },
+            getComments() {
+                axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id)
+                    .then(response => {this.comments = response.data.comments})
+            },
+            createComment(){
+                if (this.newContent.replace("\n","").length){
+                    var form = {stid:this.stid, content:this.newContent.replace("\n","")}
+                    axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createComment/', form, {"headers": {"jwt-auth-token": localStorage.getItem("access_token")}})
+                        .then(() => {
+                            this.newContent = ""
+                            alert("글 작성이 완료되었습니다.")
+                            this.getComments()
+                            }
+                        )
+                }
+                else{
+                    this.newContent = ""
+                    alert("글을 입력해주세요!!")
+                }
+            }
+        }
+    }
+</script>

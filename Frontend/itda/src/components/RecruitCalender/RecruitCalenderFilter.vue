@@ -11,48 +11,39 @@
                         chips="chips" label="채용 전형" multiple="multiple" @change="optionrecruit"></v-select>
                 </v-col>
                 <v-col align-self="center" cols="12" sm="4">
-                    <v-btn @click.stop="dialog=!dialog" outlined color="teal" class="mx-3 btn-border-colored"
+                    <v-btn @click.stop="dialog=true" outlined color="teal" class="mx-3 btn-border-colored"
                         width="100%">
                         기술 스택
                     </v-btn>
-
-                    <v-dialog v-model="dialog" max-width="800px">
-
-
-
-
+                    <v-dialog v-model="dialog" max-width="500px">
                         <v-card width="500px">
                             <v-card-title>기술 스택</v-card-title>
                             <v-divider></v-divider>
-                            <v-card-text style="height: 500px;">
-                                <v-row v-for="i in 9" :key="i">
-                                    <v-col class="py-0 pr-0" v-for="j in i==9?1:5" :key="j">
+                            <v-card-text>
+                                <v-row v-for="i in 14" :key="i">
+                                    <v-col class="py-0 pr-0" v-for="j in i==14?2:3" :key="j">
                                         <v-row>
                                             <div class="pa-0">
-                                                <v-checkbox class="mt-0" v-model="stacklist[5*(i-1) + j-1].value">
+                                                <v-checkbox class="mt-0" v-model="stacklist[3*(i-1) + j-1].value">
                                                 </v-checkbox>
                                             </div>
                                             <div class="pa-0 mx-auto" style="position:relative;left:-15px">
                                                 <v-img class="mx-auto" height="20" width="20"
-                                                    :src="getImgUrl(5*(i-1) + j)" aspect-ratio="1" contain></v-img>
-                                                <p class="text-center">{{stacklist[5*(i-1) + j-1].tname}}</p>
+                                                    :src="getImgUrl(3*(i-1) + j)" aspect-ratio="1" contain></v-img>
+                                                <p class="text-center">{{stacklist[3*(i-1) + j-1].tname}}</p>
                                             </div>
                                         </v-row>
                                     </v-col>
-                                    <v-col v-for="j in i==9?4:0" :key="j+1"></v-col>
                                 </v-row>
                             </v-card-text>
                             <v-divider></v-divider>
                             <v-spacer></v-spacer>
                             <v-card-actions class="mb-3">
                                 <v-spacer></v-spacer>
-                                <v-btn color="#00AAB3" text="text" @click="goSaveStack">저장</v-btn>
-                                <v-btn color="black darken-1" text="text" @click="dialog = false">닫기</v-btn>
+                                <v-btn color="#00AAB3" text="text" @click="getStackList">저장</v-btn>
+                                <v-btn color="black darken-1" text="text" @click="close">닫기</v-btn>
                             </v-card-actions>
                         </v-card>
-
-
-
                     </v-dialog>
                 </v-col>
             </v-row>
@@ -111,7 +102,6 @@
                     '../../assets/stacks/8.png',
                     '../../assets/stacks/9.png',
                     '../../assets/stacks/10.png',
-
                     '../../assets/stacks/11.png',
                     '../../assets/stacks/12.png',
                     '../../assets/stacks/13.png',
@@ -122,7 +112,6 @@
                     '../../assets/stacks/18.png',
                     '../../assets/stacks/19.png',
                     '../../assets/stacks/20.png',
-
                     '../../assets/stacks/21.png',
                     '../../assets/stacks/22.png',
                     '../../assets/stacks/23.png',
@@ -133,7 +122,6 @@
                     '../../assets/stacks/28.png',
                     '../../assets/stacks/29.png',
                     '../../assets/stacks/30.png',
-
                     '../../assets/stacks/31.png',
                     '../../assets/stacks/32.png',
                     '../../assets/stacks/33.png',
@@ -163,7 +151,6 @@
             },
             // 1 신입만, 2 인턴, 3 신입인턴
             optionrecruit() {
-
                 if (this.recruit.length == 1) {
                     if (this.recruit[0] == "신입") {
                         this.options.recruit = 1
@@ -174,6 +161,19 @@
                     this.options.recruit = 3
                 }
             },
+            getStackList(){
+                var temp = []
+                for(var i=0; i<this.stacklist.length; i++){
+                    if(this.stacklist[i].value){
+                        temp.push(this.stacklist[i].sid)
+                    }
+                }
+                this.options.selectstacklist = temp
+                this.dialog = false
+            },
+            close(){
+                this.dialog = false
+            }
         },
         computed: {
             ...mapState(["stacklist", "recruitList"]),
