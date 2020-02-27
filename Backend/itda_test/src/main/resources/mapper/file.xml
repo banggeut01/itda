@@ -5,7 +5,7 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 <mapper namespace="ssafy.file">
 
 	<insert id="insertFile" parameterType="com.ssafy.itda.itda_test.model.Files">
-		INSERT INTO file_t(uid, stid, url) values(#{uid}, #{stid}, #{url})
+		INSERT INTO file_t(uid, stid, url, fileName) values(#{uid}, #{stid}, #{url}, #{fileName})
 	</insert>
 	
 	<delete id="deleteFile" parameterType="java.lang.Integer">
@@ -13,11 +13,11 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 	</delete>
 	
 	<select id="getFiles" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Files">
-		SELECT fid, uid, stid, url, createdAt FROM file_t WHERE stid = #{stid}
+		SELECT fid, uid, stid, url, fileName, createdAt FROM file_t WHERE stid = #{stid}
 	</select>
 
 	<select id="getFile" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Files">
-		SELECT fid, uid, stid, url, createdAt FROM file_t WHERE fid = #{fid}
+		SELECT fid, uid, stid, url, fileName, createdAt FROM file_t WHERE fid = #{fid}
 	</select>
 
 </mapper>

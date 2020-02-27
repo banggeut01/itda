@@ -4,11 +4,13 @@
         defalutView="timeGridWeek"
         :plugins="calendarPlugins"
         :custom-buttons="customButtons"
+        :events="weekEvent"
         :header="header"
-        minTime='18:00'
+        minTime='12:00'
         maxTime='24:00'
         :config="config"
-        contentHeight="auto"/>
+        contentHeight="auto"
+        @eventClick="deleteCheck"/>
     <v-divider></v-divider>
     <v-dialog v-model="modal" scrollable="scrollable" max-width="500px">
         <v-card>
@@ -48,7 +50,8 @@ export default {
         Datetime,
     },
     props:{
-        study:{type:Object}
+        study:{type:Object},
+        meetings:{type:Array}
     },
     data() {
         return {
@@ -74,12 +77,12 @@ export default {
             },
             config:{
                 locale:'ko'
-            }
+            },
+            weekEvent:[],
         }
     },
     methods:{
         submit() {
-            console.log(this.$refs.form.validate())
             if (this.$refs.form.validate()){
                 var tmp = {
                         startTime:this.formData.startTime.slice(0,10) + ' ' + this.formData.startTime.slice(11,16),
@@ -95,8 +98,8 @@ export default {
                         this.formData.title = null
                         this.formData.startTime = ''
                         this.formData.endTime = ''
+                        this.$emit('update')
                     })
-                    .catch(err=>{console.log(err)})
                 }
             },
             open() {
@@ -104,8 +107,33 @@ export default {
             },
             close() {
                 this.modal = false
+            },
+            updateMeetings(){
+                this.weekEvent = []
+                for (var i = 0; i < this.meetings.length; i++){
+                    this.weekEvent.push({start:this.meetings[i].startTime,end:this.meetings[i].endTime,title:this.meetings[i].title,mid:this.meetings[i].mid,textColor: "white"})
+                }
+            },
+            deleteCheck(arg){
+                if (confirm("정말 삭제하시겠습니까??") == true){
+                    axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteMeeting/' + arg.event._def.extendedProps.mid, {'headers': {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(() => {
+                        alert('일정을 삭제하였습니다.')
+                        this.$emit('update')
+                    })
+                }
             }
         },
+    mounted(){
+        this.updateMeetings()
+    },
+    watch:{
+        meetings:{
+            deep:true,
+            immediate:true,
+            handler:"updateMeetings"
+        }
+    }
 }
 </script>
 

@@ -30,4 +30,8 @@ public class CommentDao {
 	public void deleteComment(int cmid) {
 		sqlSession.delete(ns + "deleteComment", cmid);
 	}
+	
+	public Comment getComment(int cmid) {
+		return sqlSession.selectOne(ns + "getComment", cmid);
+	}
 }

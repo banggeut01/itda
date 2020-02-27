@@ -132,7 +132,7 @@ public class CommentController {
 
 	@ApiOperation(value = "스터디 상세 페이지에서 댓글을 삭제한다.", response = Result.class)
 	@RequestMapping(value = "/deleteComment/{cmid}", method = RequestMethod.DELETE)
-	public ResponseEntity<Result> deleteComment(HttpServletRequest req, @RequestBody int cmid) throws Exception {
+	public ResponseEntity<Result> deleteComment(HttpServletRequest req, @PathVariable int cmid) throws Exception {
 		logger.info("4-------------deleteComment -----------------------------" + new Date());
 		Map<String, Object> resultMap = new HashMap<>();
 		String token = req.getHeader("jwt-auth-token");
@@ -144,9 +144,15 @@ public class CommentController {
 				r.setMsg("키값이 누락되었습니다.");
 				r.setState("fail");
 			} else {
-				commentService.deleteComment(cmid);
-				r.setMsg("댓글 삭제가 완료되었습니다.");
-				r.setState("success");
+				Comment comment = commentService.getComment(cmid);
+				if (comment.getUid() == uid || uid == 1) {
+					commentService.deleteComment(cmid);
+					r.setMsg("댓글 삭제가 완료되었습니다.");
+					r.setState("success");
+				} else {
+					r.setMsg("권한이 없습니다.");
+					r.setState("fail");
+				}
 			}
 		} else {
 			r.setMsg("uid 값이 없습니다.");

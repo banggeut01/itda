@@ -28,7 +28,6 @@
                     dayGridPlugin, interactionPlugin
                 ],
                 calendarEvent: [],
-
                 baseLen: 0
             }
         },

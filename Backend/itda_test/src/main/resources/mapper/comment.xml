@@ -4,30 +4,34 @@ PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="ssafy.comment">
 
-	<select id="getComments" 
-	parameterType="java.lang.Integer"
-	resultType="com.ssafy.itda.itda_test.model.Comment">
+	<select id="getComments" parameterType="java.lang.Integer"
+		resultType="com.ssafy.itda.itda_test.model.Comment">
 		SELECT *
 		FROM comment_t
-		WHERE stid = #{stid} order by createdAt
+		WHERE stid = #{stid} order by
+		createdAt
 	</select>
-	
+
 	<insert id="createComment"
-	parameterType="com.ssafy.itda.itda_test.model.Comment"
-	>
-		INSERT INTO comment_t(uid, stid, content)
-		VALUES ( #{uid}, #{stid}, #{content} ) 
+		parameterType="com.ssafy.itda.itda_test.model.Comment">
+		INSERT INTO
+		comment_t(uid, stid, content)
+		VALUES ( #{uid},
+		#{stid}, #{content} )
 	</insert>
-	
+
 	<update id="updateComment"
-	parameterType="com.ssafy.itda.itda_test.model.Comment"
-	>
-		UPDATE comment_t SET content = #{content} WHERE stid = #{stid}
+		parameterType="com.ssafy.itda.itda_test.model.Comment">
+		UPDATE
+		comment_t SET content = #{content} WHERE stid =
+		#{stid}
 	</update>
-	
-	<delete id="deletedcomment"
-	parameterType="java.lang.Integer"
-	>
+
+	<select id="getComment" parameterType="java.lang.Integer" resultType="com.ssafy.itda.itda_test.model.Comment">
+		SELECT * FROM comment_t WHERE cmid = #{cmid} 
+	</select>
+
+	<delete id="deleteComment" parameterType="java.lang.Integer">
 		DELETE FROM comment_t
 		WHERE cmid = #{cmid}
 	</delete>

@@ -2,14 +2,14 @@
     <v-container v-if="comments.length">
         <v-row v-for="comment in comments" :key="comment.cmid">
             <v-col cols="2" v-if="comment.uid == userInfo.user.uid" align-self="center">
-                <p>{{person[findPerson(comment.uid)-1].uname}}</p>
+                <p v-if="person.length">{{person[findPerson(comment.uid)-1].uname}}</p>
                 <v-img></v-img>
             </v-col>
             <v-col cols="8" sm="9" align-self="center">
                 {{comment.content}}
                 {{comment.createdAt}}
             </v-col>
-            <v-col cols="1" align-self="center" style="cursor:pointer;"><v-icon>close</v-icon></v-col>
+            <v-col cols="1" align-self="center"><v-icon v-if="comment.uid == userInfo.user.uid || captain == userInfo.user.uid" @click="deleteComment(comment.cmid)" style="cursor:pointer">close</v-icon></v-col>
             <v-col cols="2" v-if="comment.uid != userInfo.user.uid" align-self="center">
                 <p v-if="findPerson(comment.uid)">{{person[findPerson(comment.uid)-1].uname}}</p>
                 <p v-else>스터디를 탈퇴한 회원</p>
@@ -53,9 +53,10 @@
         props: {
             stid: {type:Number},
             person: {type:Array},
+            captain:{type:Number}
         },
         computed:{
-            ...mapState(["userInfo"])
+            ...mapState(["userInfo"]),
         },
         mounted(){
             this.getComments()
@@ -87,6 +88,23 @@
                 else{
                     this.newContent = ""
                     alert("글을 입력해주세요!!")
+                }
+            },
+            deleteComment(cmid){
+                var idx = undefined
+                for (var i=0; i<this.comments.length; i++){
+                    if (this.comments[i].cmid == cmid){
+                        idx = i
+                        break
+                    }
+                }
+                if (this.comments[idx].uid == this.userInfo.user.uid || this.captain == this.userInfo.user.uid){
+                    axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteComment/'+cmid, {"headers": {"jwt-auth-token": localStorage.getItem("access_token")}})
+                        .then(() => {
+                            alert("글 삭제가 완료되었습니다.")
+                            this.getComments()
+                        }
+                    )
                 }
             }
         }

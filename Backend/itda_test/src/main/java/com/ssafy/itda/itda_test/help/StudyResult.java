@@ -5,12 +5,14 @@ import java.util.List;
 
 import com.ssafy.itda.itda_test.model.Comment;
 import com.ssafy.itda.itda_test.model.Files;
+import com.ssafy.itda.itda_test.model.Meeting;
 import com.ssafy.itda.itda_test.model.Study;
 
 public class StudyResult implements Serializable {
 	private Study study;
 	private List<Comment> comments;
 	private List<Files> files;
+	private List<Meeting> meetings;
 	private String msg;
 	private String state;
 
@@ -66,10 +68,18 @@ public class StudyResult implements Serializable {
 		this.files = files;
 	}
 
+	public List<Meeting> getMeetings() {
+		return meetings;
+	}
+
+	public void setMeetings(List<Meeting> meetings) {
+		this.meetings = meetings;
+	}
+
 	@Override
 	public String toString() {
-		return "StudyResult [study=" + study + ", comments=" + comments + ", files=" + files + ", msg=" + msg
-				+ ", state=" + state + "]";
+		return "StudyResult [study=" + study + ", comments=" + comments + ", files=" + files + ", meetings=" + meetings
+				+ ", msg=" + msg + ", state=" + state + "]";
 	}
 
 }

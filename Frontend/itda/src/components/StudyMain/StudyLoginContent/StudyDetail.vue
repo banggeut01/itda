@@ -58,9 +58,7 @@ export default {
       getStudyDetail(id){
         if (id) {
           axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/'+id)
-              .then(response => {
-                  this.person = response.data
-          })
+              .then(response => {this.person = response.data})
         }
       },
       goDetail(id){

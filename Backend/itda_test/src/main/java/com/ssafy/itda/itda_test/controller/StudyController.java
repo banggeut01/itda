@@ -87,8 +87,10 @@ public class StudyController {
 		sr.setStudy(s);
 		List<Comment> comments = CommentService.getComments(stid);
 		List<Files> files = fileService.getFiles(stid);
+		List<Meeting> meetings = studyService.getStudyMeeting(stid);
 		sr.setComments(comments);
 		sr.setFiles(files);
+		sr.setMeetings(meetings);
 		sr.setMsg("스터디 정보를 가져오는데 성공하였습니다.");
 		sr.setState("success");
 		return new ResponseEntity<StudyResult>(sr, HttpStatus.OK);
@@ -174,6 +176,7 @@ public class StudyController {
 						|| model.getEndTime().equals("")) {
 					r.setMsg("필수 입력값이 입려되지 않았습니다!");
 					r.setState("fail");
+					return new ResponseEntity<Result>(r, HttpStatus.OK);
 				}
 				studyService.createMeeting(model);
 
@@ -188,6 +191,48 @@ public class StudyController {
 			r.setState("fail");
 		}
 		return new ResponseEntity<Result>(r, HttpStatus.OK);
+	}
+
+	@ApiOperation(value = "미팅을 삭제한다.", response = Result.class)
+	@RequestMapping(value = "/deleteMeeting/{mid}", method = RequestMethod.DELETE)
+	public ResponseEntity<Result> deleteMeeting(@PathVariable int mid, HttpServletRequest req) throws Exception {
+		logger.info("2-------------deleteMeeting-----------------------------" + new Date());
+		logger.info("2-------------deleteMeeting-----------------------------" + mid);
+		Result r = new Result();
+		Map<String, Object> resultMap = new HashMap<>();
+		String token = req.getHeader("jwt-auth-token");
+		if (token != null && !token.equals("")) {
+			resultMap.putAll(jwtService.get(token));
+			int uid = (int) resultMap.get("uid");
+			Meeting m = studyService.getMeeting(mid);
+			if (mid == 0 || m == null) {
+				r.setMsg("존재하지 않는 mid값입니다.");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
+			int stid = m.getStid();
+			boolean ingroup = false;
+			List<StudyGroup> sglist = studyGroupService.getStudyGroup(stid);
+			for (StudyGroup sg : sglist) {
+				if (sg.getUid() == uid) {
+					ingroup = true;
+					break;
+				}
+			}
+			if (ingroup) {
+				studyService.deleteMeeting(mid);
+				r.setMsg("미팅 삭제가 성공적으로 완료되었습니다.");
+				r.setState("success");
+			} else {
+				r.setMsg("해당 스터디 그룹에 속해있지 않습니다!");
+				r.setState("fail");
+			}
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
+		} else {
+			r.setMsg("사용자 정보를 읽어올 수 없습니다.");
+			r.setState("fail");
+			return new ResponseEntity<Result>(r, HttpStatus.OK);
+		}
 	}
 
 }

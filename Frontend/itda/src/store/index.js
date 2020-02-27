@@ -12,7 +12,7 @@ export default new Vuex.Store({
     isLogin: false,
     isLoginError: false,
     isDialog: true,
-    stacklist: [
+    stackList: [
       {
         sid: 1,
         tname: "Java",

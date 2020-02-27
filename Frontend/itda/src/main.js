@@ -11,7 +11,7 @@ import 'vue-datetime/dist/vue-datetime.css'
 
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: "AIzaSyAi0OWwP8o1_uDvenwNxMqkvLb_JMLo11c",
+  apiKey: process.env.VUE_APP_FIREBASE,
   authDomain: "itda-266600.firebaseapp.com",
   databaseURL: "https://itda-266600.firebaseio.com",
   projectId: "itda-266600",

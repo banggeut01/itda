@@ -76,12 +76,12 @@
                   <v-col class="py-0 pr-0" v-for="j in i==9?1:5" :key="j">
                     <v-row>
                       <div class="pa-0">
-                        <v-checkbox class="mt-0" v-model="stacklist[5*(i-1) + j-1].value"></v-checkbox>
+                        <v-checkbox class="mt-0" v-model="stackList[5*(i-1) + j-1].value"></v-checkbox>
                       </div>
                       <div class="pa-0 mx-auto" style="position:relative;left:-15px">
                         <v-img class="mx-auto" height="20" width="20" :src="getImgUrl(5*(i-1) + j)" aspect-ratio="1"
                           contain></v-img>
-                        <p class="text-center">{{stacklist[5*(i-1) + j-1].tname}}</p>
+                        <p class="text-center">{{stackList[5*(i-1) + j-1].tname}}</p>
                       </div>
                     </v-row>
                   </v-col>
@@ -114,10 +114,7 @@
 <script>
   import axios from "axios";
   import router from "../router";
-  import {
-    mapState
-  } from "vuex";
-
+  
   export default {
     data() {
       return {
@@ -138,53 +135,255 @@
         password_rg: "",
         password_rg1: "",
         dialog: false,
-        imgsrc1: [
-          '../assets/stacks/1.png',
-          '../assets/stacks/2.png',
-          '../assets/stacks/3.png',
-          '../assets/stacks/4.png',
-          '../assets/stacks/5.png',
-          '../assets/stacks/6.png',
-          '../assets/stacks/7.png',
-          '../assets/stacks/8.png',
-          '../assets/stacks/9.png',
-          '../assets/stacks/10.png',
-
-          '../assets/stacks/11.png',
-          '../assets/stacks/12.png',
-          '../assets/stacks/13.png',
-          '../assets/stacks/14.png',
-          '../assets/stacks/15.png',
-          '../assets/stacks/16.png',
-          '../assets/stacks/17.png',
-          '../assets/stacks/18.png',
-          '../assets/stacks/19.png',
-          '../assets/stacks/20.png',
-
-          '../assets/stacks/21.png',
-          '../assets/stacks/22.png',
-          '../assets/stacks/23.png',
-          '../assets/stacks/24.png',
-          '../assets/stacks/25.png',
-          '../assets/stacks/26.png',
-          '../assets/stacks/27.png',
-          '../assets/stacks/28.png',
-          '../assets/stacks/29.png',
-          '../assets/stacks/30.png',
-
-          '../assets/stacks/31.png',
-          '../assets/stacks/32.png',
-          '../assets/stacks/33.png',
-          '../assets/stacks/34.png',
-          '../assets/stacks/35.png',
-          '../assets/stacks/36.png',
-          '../assets/stacks/37.png',
-          '../assets/stacks/38.png',
-          '../assets/stacks/39.png',
-          '../assets/stacks/40.png',
-          '../assets/stacks/41.png'
-        ]
-      };
+        stackList: [
+      {
+        sid: 1,
+        tname: "Java",
+        cnt: 5,
+        value: false
+      },
+      {
+        sid: 2,
+        tname: "C",
+        cnt: 23,
+        value: false
+      },
+      {
+        sid: 3,
+        tname: "C++",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 4,
+        tname: "C#",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 5,
+        tname: "Objective-C",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 6,
+        tname: "Python",
+        cnt: 4,
+        value: false
+      },
+      {
+        sid: 7,
+        tname: "PHP",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 8,
+        tname: "JavaScript",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 9,
+        tname: "Kotlin",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 10,
+        tname: "Unix",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 11,
+        tname: "Linux",
+        cnt: 3,
+        value: false
+      },
+      {
+        sid: 12,
+        tname: "Windows",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 13,
+        tname: "Android",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 14,
+        tname: "iOS",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 15,
+        tname: "MySQL",
+        cnt: 3,
+        value: false
+      },
+      {
+        sid: 16,
+        tname: "MS-SQL",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 17,
+        tname: "Oracle",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 18,
+        tname: "MariaDB",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 19,
+        tname: "MongoDB",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 20,
+        tname: "SQLite",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 21,
+        tname: "NoSQL",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 22,
+        tname: "HTML",
+        cnt: 3,
+        value: false
+      },
+      {
+        sid: 23,
+        tname: "CSS",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 24,
+        tname: "Vue.js",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 25,
+        tname: "jQuery",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 26,
+        tname: "Ajax",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 27,
+        tname: "Spring",
+        cnt: 3,
+        value: false
+      },
+      {
+        sid: 28,
+        tname: "Django",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 29,
+        tname: "Flask",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 30,
+        tname: "Node.js",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 31,
+        tname: "JSP",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 32,
+        tname: "JPA/Hibernate",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 33,
+        tname: "WAS",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 34,
+        tname: "AWS",
+        cnt: 5,
+        value: false
+      },
+      {
+        sid: 35,
+        tname: "OOP",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 36,
+        tname: "AI",
+        cnt: 2,
+        value: false
+      },
+      {
+        sid: 37,
+        tname: "Machine Learning",
+        cnt: 1,
+        value: false
+      },
+      {
+        sid: 38,
+        tname: "Docker",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 39,
+        tname: "RESTful-API",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 40,
+        tname: "JIRA",
+        cnt: 0,
+        value: false
+      },
+      {
+        sid: 41,
+        tname: "Git",
+        cnt: 0,
+        value: false
+      }
+    ],
+      }
     },
     created() {
       this.getAllData();
@@ -229,16 +428,16 @@
       },
       removeStack(idx, sid) {
         this.userInfo.mystacks.splice(idx, 1);
-        this.stacklist[sid - 1].value = false;
+        this.stackList[sid - 1].value = false;
       },
       goSaveStack() {
         this.dialog = false;
         var tmp = [];
         for (var i = 0; i < 41; i++) {
-          if (this.stacklist[i].value) {
+          if (this.stackList[i].value) {
             tmp.push({
-              sid: this.stacklist[i].sid,
-              tname: this.stacklist[i].tname
+              sid: this.stackList[i].sid,
+              tname: this.stackList[i].tname
             });
           }
         }
@@ -262,7 +461,7 @@
 
               var tmp_stacks = response.data.mystacks;
               for (var i = 0; i < tmp_stacks.length; i++) {
-                this.stacklist[tmp_stacks[i].sid - 1].value = true;
+                this.stackList[tmp_stacks[i].sid - 1].value = true;
               }
             }
           })
@@ -271,36 +470,29 @@
       onChange() {
         if (confirm("사진을 업로드하시겠습니까?") === true) {
           //확인
-
-          console.log("확인");
-          this.selectImg = this.$refs.uimg.files[0];
-          var formdata = new FormData();
-          formdata.append("file", this.selectImg);
+          this.selectImg = this.$refs.uimg.files[0]
+          var formdata = new FormData()
+          formdata.append("file", this.selectImg)
           const config = {
             headers: {
               "Content-Type": "multipart/form-data",
               "jwt-auth-token": localStorage.getItem("access_token")
             }
-          };
+          }
           axios
-            .post(
-              "https://i02b201.p.ssafy.io:8197/itda/api/uploadImg",
-              formdata,
-              config
-            )
+            .post("https://i02b201.p.ssafy.io:8197/itda/api/uploadImg", formdata, config)
             .then(response => {
-              this.imageResult = response.data.fileDownloadUri;
-              this.userInfo.user.uimg = this.imageResult;
-            });
+              this.imageResult = response.data.fileDownloadUri
+              this.userInfo.user.uimg = this.imageResult
+            })
         } else {
           //취소
-          this.file = null;
-          return false;
+          this.file = null
+          return false
         }
       }
     },
     computed: {
-      ...mapState(["stacklist"]),
       getImgUrl() {
         return (img) => {
           return require("../assets/stacks/" + img + '.png')

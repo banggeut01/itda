@@ -9,4 +9,5 @@ public interface ICommentService {
 	void createComment(Comment model);
 	void updateComment(Comment model);
 	void deleteComment(int cmid);
+	Comment getComment(int cmid);
 }	
