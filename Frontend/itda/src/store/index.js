@@ -1,14 +1,12 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from "vue"
+import Vuex from "vuex"
 import axios from "axios"
-import firebase from 'firebase'
+import firebase from "firebase"
 
-//import router from '../router/index.js';
 Vue.use(Vuex)
 export default new Vuex.Store({
   state: {
-    userInfo: null, // 필요한 이유는 계속 이메일과 패스워드를 확인 할 수 없으니까, 
-    // selectedUser가 allUsers에 찾은 사람을 객체로 userInfo를 저장한다. 
+    userInfo: null,
     isLogin: false,
     isLoginError: false,
     isDialog: true,
@@ -262,12 +260,7 @@ export default new Vuex.Store({
     ],
     recruitList:[],
   },
-  //뮤테이션과 엑션스 차이는? 
-  //뮤테이션 : state 값 변경. 
-  //엑션스 : 비지니스 로직이다.
   mutations: {
-    //상태값 변화
-    // 로그인이 성공했을 때, 
     loginSuccess(state, payload) {
       state.isLogin = true
       state.isLoginError = false
@@ -276,11 +269,9 @@ export default new Vuex.Store({
     },
     FisrtloginSocialSuccess(state)
     {
-      alert("먼저와라")
       state.isLogin = true
       alert(state.isLogin)
     },
-    //로그인이 실패했을 때.
     loginError(state) {
       state.isLogin = false
       state.isLoginError = true
@@ -305,12 +296,12 @@ export default new Vuex.Store({
   {
     login({ dispatch }, { email, pw }) {
       axios
-        .post('https://i02b201.p.ssafy.io:8197/itda/api/login', {
+        .post("https://i02b201.p.ssafy.io:8197/itda/api/login", {
           email, pw
         })
         .then(res => {
-          if (res.data.state == 'success') {
-            let token = res.headers['jwt-auth-token']
+          if (res.data.state == "success") {
+            let token = res.headers["jwt-auth-token"]
             localStorage.setItem("access_token", token)
             localStorage.setItem("uname", res.data.user.uname)
             dispatch("getMemberInfo")
@@ -322,8 +313,7 @@ export default new Vuex.Store({
     },
     logout({ commit }) {
       commit("logout")
-      if(localStorage.getItem("social") == 'social'){
-        
+      if(localStorage.getItem("social") == "social"){
         firebase.auth().signOut()
           .then(()=>{
             alert("성공적으로 로그아웃 되었습니다.")
@@ -339,15 +329,14 @@ export default new Vuex.Store({
         return;
       }
       axios.get("https://i02b201.p.ssafy.io:8197/itda/api/getUser", {headers:{"jwt-auth-token": token}})
-        .then(res => {
-          let userInfo = res.data
-          commit('loginSuccess', userInfo)
+        .then(response => {
+          let userInfo = response.data
+          commit("loginSuccess", userInfo)
           localStorage.setItem("mid",userInfo.user.auth)
-          
         })
         .catch(() => {
-          localStorage.clear();
-          alert("로그인 하시겠어요 ?!")
+          alert("로그인 시간 만료로 인해 로그아웃 되었습니다.")
+          commit("logout")
         })
     },
   },

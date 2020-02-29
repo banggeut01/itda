@@ -1,5 +1,8 @@
 <template>
   <v-container>
+    <v-row class="ml-1 my-1">
+        <p id="studyMemberTitle">스터디 일정</p>
+    </v-row>
     <FullCalendar
         defalutView="timeGridWeek"
         :plugins="calendarPlugins"
@@ -8,7 +11,8 @@
         :header="header"
         minTime='12:00'
         maxTime='24:00'
-        :config="config"
+        locale="ko"
+        :locales="allLocales"
         contentHeight="auto"
         @eventClick="deleteCheck"/>
     <v-divider></v-divider>
@@ -39,9 +43,8 @@ import axios from 'axios'
 import FullCalendar from '@fullcalendar/vue'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import resourceTimelinePlugin from '@fullcalendar/resource-timeline'
-// import ko from '@fullcalendar/core/locales/ko'
 import {Datetime} from 'vue-datetime'
-
+import allLocales from '@fullcalendar/core/locales-all'
 
 export default {
     name:"studyschedule",
@@ -75,10 +78,8 @@ export default {
                     click: () => this.open()
                 }
             },
-            config:{
-                locale:'ko'
-            },
             weekEvent:[],
+            allLocales:allLocales
         }
     },
     methods:{

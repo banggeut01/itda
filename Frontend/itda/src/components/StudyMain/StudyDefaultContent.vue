@@ -32,7 +32,7 @@
         </v-data-iterator>
         <v-row v-else>
             <v-col style="text-align:center">
-                찾는 데이터가 없어요...ㅠ
+                스터디가 등록되지 않았습니다.
             </v-col>
         </v-row>
     </v-row>

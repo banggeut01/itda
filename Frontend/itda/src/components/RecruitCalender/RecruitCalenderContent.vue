@@ -8,6 +8,8 @@
         :events="calendarEvent"
         :eventLimits=6
         :eventOrder="['color']"
+        locale="ko"
+        :locales="allLocales"
         @change="changeEvent"
         @eventClick="handleDateClick"/>
     </v-row>
@@ -18,6 +20,7 @@
     import dayGridPlugin from '@fullcalendar/daygrid'
     import interactionPlugin from '@fullcalendar/interaction'
     import router from '../../router/index.js'
+    import allLocales from '@fullcalendar/core/locales-all'
     export default {
         components: {
             FullCalendar, 
@@ -28,7 +31,8 @@
                     dayGridPlugin, interactionPlugin
                 ],
                 calendarEvent: [],
-                baseLen: 0
+                baseLen: 0,
+                allLocales:allLocales
             }
         },
         props: {
