@@ -104,8 +104,8 @@ public class FileUploadDownloadService {
 	}
 
 	private int validFile(String fileName) {
-		String[] extension = { "hwp", "doc", "docx", "xls", "xlsx", "ppt", "pptx", "pdf", "jpg", "jpeg", "png", "gif",
-				"bmp", "tiff" };
+		String[] extension = { ".hwp", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx", ".pdf", ".jpg", ".jpeg", ".png", ".gif",
+				".bmp", ".tiff",".java", ".py", ".txt", ".md" };
 		for (int i = 0; i < extension.length; i++) {
 			if (fileName.contains(extension[i])) {
 				return i;
