@@ -114,6 +114,11 @@ public class StudyController {
 				r.setState("fail");
 				return new ResponseEntity<Result>(r, HttpStatus.OK);
 			}
+			if (model.getMaxPcnt() > 20 || model.getMaxPcnt() < 2) {
+				r.setMsg("정상적인 범위가 아닙니다! 인원은 2~20명까지 가능합니다!");
+				r.setState("fail");
+				return new ResponseEntity<Result>(r, HttpStatus.OK);
+			}
 			model.setCaptain(captain);
 			if (model.getStype() != 1 || model.getStype() != 2) {
 				model.setTypeFk(null);
