@@ -58,6 +58,7 @@
 
 <script>
 import axios from 'axios'
+import router from '../../../router'
 import { mapState } from 'vuex'
 
 export default {
@@ -81,13 +82,18 @@ export default {
             this.overlayRead = false
         },
         enter() {
-            axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
-            .then(
-                ()=>{
-                    alert('스터디 가입이 완료되었습니다.')
-                    this.getStudyDetail(this.study.stid)
-                    this.$emit('update')
-            })
+            if(confirm("가입하시겠습니까?") == true){
+                axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createStudyGroup',{"stid":this.study.stid},{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                .then(
+                    ()=>{
+                        alert('스터디 가입이 완료되었습니다.')
+                        this.getStudyDetail(this.study.stid)
+                        this.$emit('update')
+                        if (confirm("스터디 페이지로 가시겠어요?")){
+                            router.push({name:'studydetail', params:{id:this.study.stid}})
+                        }
+                })
+            }
         },
         exit() {
             if (confirm("탈퇴하시겠습니까?") == true){
