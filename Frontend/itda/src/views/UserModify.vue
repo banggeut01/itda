@@ -41,14 +41,14 @@
             </v-card-text>
           </v-col>
         </v-row>
-        <v-card-subtitle v-if="local_Chk">Password</v-card-subtitle>
+        <v-card-subtitle v-if="local_Chk">비밀번호 변경</v-card-subtitle>
         <v-card-text v-if="local_Chk">
           <v-row>
             <v-col cols="5">
-              <v-text-field v-model="password_rg" :value="password_rg" type="password" label="password*"></v-text-field>
+              <v-text-field v-model="password_rg" :value="password_rg" type="password" label="비밀번호*"></v-text-field>
             </v-col>
             <v-col cols="5">
-              <v-text-field v-model="password_rg1" :value="password_rg1" type="password" label="password check*">
+              <v-text-field v-model="password_rg1" :value="password_rg1" type="password" label="비밀번호 재입력*">
               </v-text-field>
             </v-col>
           </v-row>

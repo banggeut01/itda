@@ -22,7 +22,7 @@
       <v-alert class="mb-1" :value="isCong" type="success">회원가입을 축하합니다! 로그인 해주세요.</v-alert>
       <v-card v-if="isChangeLoginRegi">
         <v-toolbar flat="flat">
-          <v-toolbar-title>Register</v-toolbar-title>
+          <v-toolbar-title>회원가입</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="$emit('statusControl',false)">
             <v-icon color="black">mdi-close</v-icon>
@@ -30,15 +30,15 @@
           <!-- <v-btn color="green darken-1" text="text" @click="dialog = false">Close</v-btn> -->
         </v-toolbar>
         <div class="pa-4" style="max-width: 540px" name="regi">
-          <v-text-field v-model="name" :value="name" label="Name*"></v-text-field>
-          <v-text-field v-model="email_rg" :value="email_rg" label="Email*"></v-text-field>
+          <v-text-field v-model="name" :value="name" label="이름*"></v-text-field>
+          <v-text-field v-model="email_rg" :value="email_rg" label="이메일*"></v-text-field>
           <v-row>
             <v-col cols="6">
               <v-text-field
                 v-model="password_rg"
                 :value="password_rg"
                 type="password"
-                label="password*"
+                label="비밀번호*"
               ></v-text-field>
             </v-col>
             <v-col cols="6">
@@ -46,7 +46,7 @@
                 v-model="password_rg1"
                 :value="password_rg1"
                 type="password"
-                label="password check*"
+                label="비밀번호 확인*"
                 @keyup.enter="goRegister()"
               ></v-text-field>
             </v-col>
@@ -59,7 +59,8 @@
               block="block"
               large="large"
               @click="goRegister()"
-            >Save</v-btn>
+              style="color:white;"
+            >회원가입</v-btn>
           </v-layout>
           <v-layout>
             <v-btn
@@ -68,13 +69,13 @@
               block="block"
               large="large"
               @click="isChangeLoginRegi = !isChangeLoginRegi; goInit()"
-            >Cancel</v-btn>
+            >취소</v-btn>
           </v-layout>
         </div>
       </v-card>
       <v-card v-else>
         <v-toolbar flat="flat">
-          <v-toolbar-title>Login</v-toolbar-title>
+          <v-toolbar-title>로그인</v-toolbar-title>
           <v-spacer></v-spacer>
           <v-btn icon dark @click="$emit('statusControl',false)">
             <v-icon color="black darken-2">mdi-close</v-icon>
@@ -85,11 +86,11 @@
           <!-- pa는 패딩오토 -->
           <v-text-field v-model="email_lg" 
           @keyup.enter="goLogin()"
-          label="email을 입력하세요"></v-text-field>
+          label="이메일을 입력하세요"></v-text-field>
           <v-text-field
             v-model="password_lg"
             type="password"
-            label="password를 입력하세요"
+            label="비밀번호를 입력하세요"
             @keyup.enter="goLogin()"
           ></v-text-field>
           <v-btn
@@ -107,7 +108,7 @@
                  isCong= false
               )
               goLogin()" 
-          >Login</v-btn>
+          >로그인</v-btn>
           <!-- social login -->
           <v-btn
             class="mb-1"
@@ -117,14 +118,14 @@
             block="block"
             large="large"
             @click="socialLogin()"
-          >Google Login</v-btn>
+          >Google 계정으로 로그인</v-btn>
           <v-btn
             class="mb-1"
             depressed="depressed"
             block="block"
             large="large"
             @click="isChangeLoginRegi = !isChangeLoginRegi; goInit('isChangeLoginRegi')"
-          >Register</v-btn>
+          >회원가입</v-btn>
         </div>
       </v-card>
     </v-flex>
