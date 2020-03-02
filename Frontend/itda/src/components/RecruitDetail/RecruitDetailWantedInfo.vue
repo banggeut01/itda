@@ -23,7 +23,7 @@
       <v-col class="pb-0" v-html="wanted.detail" align-self="center"></v-col>
     </v-row>
   </v-container>
-</template>​
+</template>
 
 <script>
 import router from '../../router'
@@ -71,9 +71,10 @@ export default {
     } 
   }
 }
-</script>​
+</script>
+
 <style>
-  .renewal_template_style4 {
+.renewal_template_style4 {
     margin-left: auto;
     margin-right: auto;
   }
