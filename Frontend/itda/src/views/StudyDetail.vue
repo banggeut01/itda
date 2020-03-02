@@ -4,6 +4,7 @@
             <v-row class="ml-0" align="center">
                 <p id="headStudy">{{study.stname}}</p>
                 <v-spacer></v-spacer>
+                <v-btn @></v-btn>
                 <v-btn class="text-white" id="btn-colored" @click="goStudyMain">스터디 메인</v-btn>
             </v-row>
             <v-row class="mx-0 mb-3">
@@ -40,19 +41,25 @@
                 <p id="studyMemberTitle">스터디 파일</p>
             </v-row>
             <v-row class="ml-1 my-1">
-                <v-data-iterator :items="files" :page="page" hide-default-footer class="mx-auto">
+                <v-data-iterator :items="files" :page="page" hide-default-footer>
                     <v-row>
-                        <v-simple-table class="mx-auto" fixed-header>
+                        <v-simple-table fixed-header>
                             <thead class="px-auto">
                                 <tr>
-                                    <th class="text-center">작성자</th>
+                                    <th class="text-center">번  호</th>
                                     <th class="text-center">파일명</th>
+                                    <th class="text-center">작성자</th>
+                                    <th class="text-center">작성일자</th>
+                                    <th class="text-center">삭제</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="text-center">11</td>
-                                    <td class="text-center">11</td>
+                                <tr v-for="i in files.length" :key="i">
+                                    <td class="text-center">{{i}}</td>
+                                    <td class="text-center" @click="download(files[i-1].fileName)">{{files[i-1].fileName}}</td>
+                                    <td class="text-center">{{findPerson(files[i-1].uid)}}</td>
+                                    <td class="text-center">{{files[i-1].createdAt}}</td>
+                                    <td class="text-center">X</td>
                                 </tr>
                             </tbody>
                         </v-simple-table>
@@ -137,20 +144,29 @@
             changeOverlay() {
                 this.overlayRead = !this.overlayRead
             },
+            findPerson(uid){
+                for (var i=0; i<this.person.length; i++){
+                    if (this.person[i].uid == uid){
+                        return this.person[i].uname
+                        }
+                    }
+                return 0
+            },
             upload() {
                 if (this.uploadFile){
                     if (confirm("파일을 업로드 하시겠습니까?")){
                         var formdata = new FormData()
-                        formdata.append("file", this.uploadFile)
-                        formdata.append("stid", this.study.stid)
+                        formdata.set("file", this.uploadFile)
                         const config = {
                             headers: {
                             "Content-Type": "multipart/form-data",
                             "jwt-auth-token": localStorage.getItem("access_token")
                             }
                         }
-                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, config)
-                            .then(()=>{
+                        console.log(formdata.get('file'))
+                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, {params:{stid:this.study.stid}}, config)
+                            .then((res)=>{
+                                console.log(res)
                                 alert('파일 업로드가 완료되었습니다.'),
                                 this.uploadFile = null
                                 this.getStudy()
@@ -159,6 +175,21 @@
                 }
                 else
                     alert('파일을 입력해주세요!')
+            },
+            download(fileName){
+                axios({
+                        url: 'https://i02b201.p.ssafy.io:8197/itda/api/downloadFile/' + fileName,
+                        method: 'GET',
+                        responseType: 'blob'
+                    })
+                    .then(response => {
+                        var fileURL = window.URL.createObjectURL(new Blob([response.data]));
+                        var fileLink = document.createElement('a');
+                        fileLink.href = fileURL;
+                        fileLink.setAttribute('download', fileName);
+                        document.body.appendChild(fileLink);
+                        fileLink.click();
+                    })
             },
             getStudy() {
                 axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudy/' + this.$route.params.id)

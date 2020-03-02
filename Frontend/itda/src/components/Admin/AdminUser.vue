@@ -73,7 +73,6 @@
                     .catch((err) => 
                     {
                         alert(err)
-                        console.log(err)
                     })
 
                 }
@@ -105,10 +104,6 @@
                         if(res.data.state == 'success'){
                             this.getAllUsers();
                         }
-                    })
-                    .catch((err) => 
-                    {
-                        console.log(err)
                     })
    
                 }

@@ -50,6 +50,7 @@
 
 <script >
     import axios from 'axios'
+    import router from '../../router'
     import {mapState} from "vuex";
     
     export default {
@@ -68,6 +69,10 @@
             ...mapState(["userInfo"]),
         },
         mounted(){
+            if (this.userInfo.length){
+                alert('로그인이 만료되었습니다.')
+                router.push({name:'studymain'})
+            }
             this.getComments()
         },
         methods:{

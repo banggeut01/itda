@@ -92,8 +92,7 @@ export default {
                         title:this.formData.title
                     }
                 axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createMeeting', tmp, {'headers': {"jwt-auth-token": localStorage.getItem("access_token")}})
-                    .then((response) => {
-                        console.log(response)
+                    .then(() => {
                         alert('일정을 생성하였습니다.')
                         this.$refs.form.reset()
                         this.modal = false
@@ -147,5 +146,11 @@ export default {
 }
 .vdatetime{
     display: block;
+}
+.fc-icon-chevron-left:before {
+    content: "<";
+}    
+.fc-icon-chevron-right:before {
+    content: ">";
 }
 </style>
