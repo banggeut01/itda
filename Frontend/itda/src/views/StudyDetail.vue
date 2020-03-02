@@ -51,7 +51,6 @@
                                     <th class="text-center">파일명</th>
                                     <th class="text-center">작성자</th>
                                     <th class="text-center">작성일자</th>
-                                    <th class="text-center">삭제</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -60,7 +59,6 @@
                                     <td class="text-center" @click="download(files[page*10+i-11].fileName)" style="cursor:pointer">{{files[page*10+i-11].fileName}}</td>
                                     <td class="text-center">{{findPerson(files[page*10+i-11].uid)}}</td>
                                     <td class="text-center">{{files[page*10+i-11].createdAt}}</td>
-                                    <td class="text-center">X</td>
                                 </tr>
                             </tbody>
                         </v-simple-table>
@@ -158,14 +156,15 @@
                 if (this.uploadFile){
                     if (confirm("파일을 업로드 하시겠습니까?")){
                         var formdata = new FormData()
-                        formdata.set("file", this.uploadFile)
+                        formdata.append("file", this.uploadFile)
+                        formdata.append("stid", this.study.stid)
                         const config = {
                             headers: {
                             "Content-Type": "multipart/form-data",
                             "jwt-auth-token": localStorage.getItem("access_token")
                             }
                         }
-                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, {params:{stid:this.study.stid}}, config)
+                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, config)
                             .then(()=>{
                                 alert('파일 업로드가 완료되었습니다.'),
                                 this.uploadFile = null
@@ -196,7 +195,7 @@
                     .then(response => {
                         this.study = response.data.study
                         this.meetings = response.data.meetings
-                        // this.files = response.data.files
+                        this.files = response.data.files
                         })
             },
             getPerson() {
