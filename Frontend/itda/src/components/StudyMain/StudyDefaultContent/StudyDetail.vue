@@ -8,38 +8,48 @@
     <td class="text-center"> {{study.pcnt}} / {{study.maxPcnt}}</td>
     <v-dialog v-model="overlayRead"  max-width="500px" white>
         <v-card>
-            <v-card-title>
-                <v-container class="py-0">
-                    <v-row>
-                        <p class="headline mb-1" id="cardtitle">{{study.stname}}</p>
-                    </v-row>
-                    <v-row>
-                        <p id="stype2">{{category1[study.stype-1]}}</p>    
-                        <p id="typename2">{{study.typeName}}</p>
-                        <p id="sgroup2">{{category2[study.sgroup-1]}}</p>
-                    </v-row>
-                </v-container>
-                <v-divider></v-divider>
+            <v-card-title class="headline justify-center pb-0"
+                style="color:rgba(0, 170, 179);">
+                <v-icon style="color:rgba(0, 170, 179);" class="ma-2">edit</v-icon>
+                {{study.stname}}
             </v-card-title>
-            <v-card-text class="pb-0">
-                <v-container class="pa-0">
-                    <span v-for="people in person" :key="people.uid">{{people.uname}}</span>
-                    <span v-if="study.maxPcnt <= study.pcnt">현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
-                    <span v-else>현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
+            <br>
+            <v-card-text class="text-center p-3">
+                <p class="m-auto">{{study.content}}</p>
+            </v-card-text>
+            <v-card-text class="pa-0 pl-6 pb-3">
+                <v-container>
+                    <v-row class="text-center">
+                        <v-col class="col-4">
+                            종류<br>
+                            <h5 style="color:black;"><b>{{category1[study.stype-1]}}</b></h5>
+                        </v-col>
+                        <v-col class="col-4">
+                            주제<br>
+                            <h5 style="color:black;"><b>{{study.typeName}}</b></h5>
+                        </v-col>
+                        <v-col class="col-4">
+                            목적<br>
+                            <h5 style="color:black;"><b>{{category2[study.sgroup-1]}}</b></h5>
+                        </v-col>
+                    </v-row>
                 </v-container>
-            <v-divider class="my-1"></v-divider>
+                <div class="p-2">
+                    <v-icon style="color:rgba(0, 170, 179);" >group</v-icon>
+                    <span v-for="people in person" :key="people.uid+people.uname"> {{people.uname }}   </span>
+                    <span v-if="study.maxPcnt <= study.pcnt" class= "body-2 font-italic font-weight-light 
+                    red--text ">현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
+                    <span v-else class= "body-2 font-italic font-weight-light ">
+                        현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>          
+                </div>
             </v-card-text> 
-                <v-card-title >스터디 내용</v-card-title>
-                <v-card-text>
-                <p>{{study.content}}</p>
-                
-                </v-card-text>
+
             <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="red darken-1" text @click="del" v-if="isLogin&&ismember&study.captain==userInfo.user.uid">스터디 삭제</v-btn>
                 <v-btn color="blue darken-1" text @click="enter" v-if="isLogin&&!ismember&&study.pcnt<study.maxPcnt">스터디 가입</v-btn>
                 <v-btn color="blue darken-1" text @click="exit" v-if="isLogin&&ismember">스터디 탈퇴</v-btn>
-                <v-btn color="black darken-1" text @click="close">Close</v-btn>
+                <v-btn color="black darken-1" text @click="close">닫기</v-btn>
             </v-card-actions>
         </v-card>
     </v-dialog>

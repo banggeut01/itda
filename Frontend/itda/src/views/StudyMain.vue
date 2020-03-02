@@ -24,9 +24,9 @@
                         </v-card-text>
                         <v-card-actions>
                         <v-spacer></v-spacer>
-                        <v-btn color="success" text :disabled="!valid" @click="validate">submit</v-btn>
-                        <v-btn color="blue darken-1" text @click="reset">Reset</v-btn>
-                        <v-btn color="blue darken-1" text @click="close">Close</v-btn>
+                        <v-btn color="success" text :disabled="!valid" @click="validate">스터디 생성</v-btn>
+                        <v-btn color="blue darken-1" text @click="reset">다시 입력</v-btn>
+                        <v-btn color="blue darken-1" text @click="close">닫기</v-btn>
                         </v-card-actions>
                     </v-card>
                 </v-dialog>
