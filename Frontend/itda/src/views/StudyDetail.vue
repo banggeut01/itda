@@ -4,7 +4,8 @@
             <v-row class="ml-0" align="center">
                 <p id="headStudy">{{study.stname}}</p>
                 <v-spacer></v-spacer>
-                <v-btn @></v-btn>
+                <v-btn class="text-white mr-2" id="btn-colored" @click="exit" v-if="study.captain==userInfo.user.uid">스터디 삭제</v-btn>
+                <v-btn class="text-white mr-2" id="btn-colored" @click="exit" v-else>스터디 탈퇴</v-btn>
                 <v-btn class="text-white" id="btn-colored" @click="goStudyMain">스터디 메인</v-btn>
             </v-row>
             <v-row class="mx-0 mb-3">
@@ -101,6 +102,7 @@
 <script>
     import axios from 'axios'
     import router from '../router'
+    import { mapState } from 'vuex'
     import StudyChat from '../components/StudyDetail/StudyChat.vue'
     import StudySchedule from '../components/StudyDetail/StudySchedule.vue'
     export default {
@@ -163,10 +165,8 @@
                             "jwt-auth-token": localStorage.getItem("access_token")
                             }
                         }
-                        console.log(formdata.get('file'))
                         axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, {params:{stid:this.study.stid}}, config)
-                            .then((res)=>{
-                                console.log(res)
+                            .then(()=>{
                                 alert('파일 업로드가 완료되었습니다.'),
                                 this.uploadFile = null
                                 this.getStudy()
@@ -203,6 +203,22 @@
                 axios.get('https://i02b201.p.ssafy.io:8197/itda/api/getStudyGroup/' + this.$route.params.id)
                     .then(response => {this.person = response.data})
             },
+            exit() {
+            if (confirm("탈퇴하시겠습니까?") == true){
+                axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(()=>{
+                        alert('스터디 탈퇴가 완료되었습니다.')
+                        router.push({name:"studymain"})
+                    })
+                }
+            },
+            del() {
+                axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                    .then(()=>{
+                        alert('스터디 삭제가 완료되었습니다.')
+                        router.push({name:"studymain"})
+                    })
+            },
             
         },
         created() {
@@ -215,7 +231,8 @@
             },
             numberOfPages () {
                 return Math.ceil(this.studies.length / 10)
-            }
+            },
+            ...mapState(["userInfo"])
         }
     }
 </script>
