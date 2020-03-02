@@ -3,8 +3,8 @@
     <v-divider></v-divider>
     <v-row>
       <div class="m-0">
-        <v-btn v-if="wanted.active" text small class="wanted_info_active_btn m-3" style="color:white;">채용중</v-btn>
-        <v-btn small text class="wanted_info_active_btn2 m-3" style="color:white;">{{ leftDate }}</v-btn>
+        <v-btn v-if="wanted.active" text small class="wanted_info_active_btn m-3" style="color:white; cursor:default;">채용중</v-btn>
+        <v-btn small text class="wanted_info_active_btn2 m-3" style="color:white;cursor:default;">{{ leftDate }}</v-btn>
         <span class="m-3" style="color:#aaaaaa;">{{wanted.startDate.substring(0, 16)}} ~ {{wanted.endDate.substring(0, 16)}}</span>
       </div>
     </v-row>
