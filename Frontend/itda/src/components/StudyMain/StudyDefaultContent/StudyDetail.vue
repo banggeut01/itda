@@ -8,33 +8,27 @@
     <td class="text-center"> {{study.pcnt}} / {{study.maxPcnt}}</td>
     <v-dialog v-model="overlayRead"  max-width="500px" white>
         <v-card>
-            <v-card-title class="headline justify-center pb-0">{{study.stname}}</v-card-title>
-            <v-divider></v-divider>
-            <v-card-text class="pa-0 pl-6 pb-3">
-                <p>스터디 종류 : {{category1[study.stype-1]}}</p>
-                <p>스터디 주제 : {{study.typeName}}</p>
-                <p>스터디 목적 : {{category2[study.sgroup-1]}}</p>
-                <div>
-                     스터디 팀원 : 
-                    <span v-for="people in person" :key="people.uid+people.uname"> {{people.uname }}   </span>
-                    <span v-if="study.maxPcnt <= study.pcnt" class= "body-2 font-italic font-weight-light 
-                    red--text ">현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
-                    <span v-else class= "body-2 font-italic font-weight-light ">
-                        현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
-                               
-                </div>
-             
+            <v-card-title>
+                <v-container class="py-0">
+                    <v-row>
+                        <p class="headline mb-1" id="cardtitle">{{study.stname}}</p>
+                    </v-row>
+                    <v-row>
+                        <p id="stype2">{{category1[study.stype-1]}}</p>    
+                        <p id="typename2">{{study.typeName}}</p>
+                        <p id="sgroup2">{{category2[study.sgroup-1]}}</p>
+                    </v-row>
+                </v-container>
+                <v-divider></v-divider>
+            </v-card-title>
+            <v-card-text class="pb-0">
+                <v-container class="pa-0">
+                    <span v-for="people in person" :key="people.uid">{{people.uname}}</span>
+                    <span v-if="study.maxPcnt <= study.pcnt">현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
+                    <span v-else>현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명]</span>
+                </v-container>
+            <v-divider class="my-1"></v-divider>
             </v-card-text> 
-            <v-divider></v-divider>
-            <!-- <v-card-title class= "ml-5">스터디원 정보 </v-card-title>
-                <v-card-title v-if="study.maxPcnt <= study.pcnt" class= "body-2 font-italic font-weight-light 
-               red--text 
-               ">현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명] </v-card-title>
-               <v-card-title v-else class= "body-2 font-italic font-weight-light ">
-                   현원: {{study.pcnt}}명[최대:{{study.maxPcnt}}명] </v-card-title> -->
-                <!-- <v-card-text>
-                <p v-for="people in person" :key="people.uid+people.uname">{{people.uname}} </p>
-                </v-card-text> -->
                 <v-card-title >스터디 내용</v-card-title>
                 <v-card-text>
                 <p>{{study.content}}</p>
@@ -131,5 +125,43 @@ export default {
     #response{
         display: none;
     }
+}
+#cardtitle{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#stype2{
+  background: #FFD166;
+  color: #ffffff;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#sgroup2{
+  background: #06D6A0;
+  color: #ffffff;
+  margin-left: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#typename2{
+  background: #118AB2;
+  color: #ffffff;
+  margin-left: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
 }
 </style>
