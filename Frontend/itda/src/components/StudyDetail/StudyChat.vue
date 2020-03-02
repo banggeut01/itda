@@ -1,23 +1,22 @@
 <template>
-    <v-container v-if="comments.length">
+    <v-container v-if="comments.length && person.length">
         <v-row class="ml-1 my-1">
             <p id="studyMemberTitle">스터디 공지사항</p>
         </v-row>
         <v-row class="ml-2" v-for="comment in comments" :key="comment.cmid">
-            <v-col cols="2" v-if="comment.uid == userInfo.user.uid" align-self="center">
-                <p v-if="person.length" class="ma-0">{{person[findPerson(comment.uid)-1].uname}}</p>
-                <v-img></v-img>
+            <img :src="person[findPerson(comment.uid)-1].uimg" :alt="person[findPerson(comment.uid)-1].uname" class="mr-3 my-auto" id="memberImg" v-if="findPerson(comment.uid) && person[findPerson(comment.uid)-1].uimg">
+            <img :src="getImgUrl" id="studyMemberImg" class="mr-3 my-auto" v-else>
+            <v-col cols="2" align-self="center">
+                <span v-if="findPerson(comment.uid)" class="ma-0">{{person[findPerson(comment.uid)-1].uname}}</span>
+                <span v-else class="ma-0">스터디를 탈퇴한 회원</span>
             </v-col>
-            <v-col cols="8" sm="9" align-self="center">
+            <v-col cols="7" sm="8" align-self="center">
                 {{comment.content}}
                 <v-spacer></v-spacer>                
                 {{comment.createdAt}}
             </v-col>
+            <v-spacer></v-spacer>
             <v-col cols="1" align-self="center"><v-icon v-if="comment.uid == userInfo.user.uid || captain == userInfo.user.uid" @click="deleteComment(comment.cmid)" style="cursor:pointer">close</v-icon></v-col>
-            <v-col cols="2" v-if="comment.uid != userInfo.user.uid" align-self="center">
-                <p v-if="findPerson(comment.uid)" class="ma-0">{{person[findPerson(comment.uid)-1].uname}}</p>
-                <p v-else class="ma-0">스터디를 탈퇴한 회원</p>
-            </v-col>
         </v-row>
         <v-row v-if="userInfo" class="mx-2">
             <v-col cols="2" align-self="center">
@@ -50,7 +49,6 @@
 
 <script >
     import axios from 'axios'
-    import router from '../../router'
     import {mapState} from "vuex";
     
     export default {
@@ -67,12 +65,11 @@
         },
         computed:{
             ...mapState(["userInfo"]),
+            getImgUrl() {
+                return require('../../assets/NoPersonImg.png')
+            },
         },
         mounted(){
-            if (this.userInfo.length){
-                alert('로그인이 만료되었습니다.')
-                router.push({name:'studymain'})
-            }
             this.getComments()
         },
         methods:{
@@ -122,7 +119,16 @@
                         )
                     }
                 }
-            }
+            },
         }
     }
 </script>
+
+<style>
+#memberImg{
+    height:50px;
+    width:50px;
+    border-radius:50%;
+    border:1px solid black;
+}   
+</style>
