@@ -170,8 +170,8 @@ export default {
             defaultStudies:[],
             loginStudies:[],
             bannerImg:[
-                    this.getImgUrl('banner1.png'),
-                    this.getImgUrl('banner2.png')
+                    this.getImgUrl("studywithu.png"),
+                    this.getImgUrl("itda_study.png")
                 ]
         }
     },
