@@ -97,7 +97,7 @@ public class FileUploadController {
 			newfile.setStid(stid);
 			fileDownloadUri = ServletUriComponentsBuilder.fromPath("/files/").path(fileName).toUriString();
 			newfile.setUrl(fileDownloadUri);
-			newfile.setFname(fileName);
+			newfile.setFileName(fileName);
 			fileService.insertFile(newfile);
 			return new FileUploadResponse(fileName, fileDownloadUri, file.getContentType(), file.getSize());
 		} else {
