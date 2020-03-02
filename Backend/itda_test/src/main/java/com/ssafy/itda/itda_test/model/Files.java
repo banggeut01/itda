@@ -6,7 +6,7 @@ public class Files implements Serializable {
 	private int fid;
 	private int uid;
 	private int stid;
-	private String fname;
+	private String fileName;
 	private String url;
 	private String createdAt;
 
@@ -51,12 +51,12 @@ public class Files implements Serializable {
 		return createdAt;
 	}
 
-	public String getFname() {
-		return fname;
+	public String getFileName() {
+		return fileName;
 	}
 
-	public void setFname(String fname) {
-		this.fname = fname;
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
 	}
 
 	public void setCreatedAt(String createdAt) {
@@ -65,7 +65,7 @@ public class Files implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Files [fid=" + fid + ", uid=" + uid + ", stid=" + stid + ", fname=" + fname + ", url=" + url
+		return "Files [fid=" + fid + ", uid=" + uid + ", stid=" + stid + ", fileName=" + fileName + ", url=" + url
 				+ ", createdAt=" + createdAt + "]";
 	}
 

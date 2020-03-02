@@ -141,14 +141,15 @@
                 if (this.uploadFile){
                     if (confirm("파일을 업로드 하시겠습니까?")){
                         var formdata = new FormData()
-                        formdata.set("file", this.uploadFile)
+                        formdata.append("file", this.uploadFile)
+                        formdata.append("stid", this.study.stid)
                         const config = {
                             headers: {
                             "Content-Type": "multipart/form-data",
                             "jwt-auth-token": localStorage.getItem("access_token")
                             }
                         }
-                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, {params:{stid:this.study.stid}}, config)
+                        axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, config)
                             .then(()=>{
                                 alert('파일 업로드가 완료되었습니다.'),
                                 this.uploadFile = null
