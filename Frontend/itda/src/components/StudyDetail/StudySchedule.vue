@@ -88,7 +88,7 @@ export default {
                 var tmp = {
                         startTime:this.formData.startTime.slice(0,10) + ' ' + this.formData.startTime.slice(11,16),
                         endTime:this.formData.endTime.slice(0,10) + ' ' + this.formData.endTime.slice(11,16),
-                        stid:this.formData.stid,
+                        stid:this.study.stid,
                         title:this.formData.title
                     }
                 axios.post('https://i02b201.p.ssafy.io:8197/itda/api/createMeeting', tmp, {'headers': {"jwt-auth-token": localStorage.getItem("access_token")}})
