@@ -205,9 +205,6 @@ export default {
               return;
             }
           })
-          .catch(err => {
-            console.log("hi" + err);
-          });
       }
     },
     ...mapActions(["login", "register", ]),

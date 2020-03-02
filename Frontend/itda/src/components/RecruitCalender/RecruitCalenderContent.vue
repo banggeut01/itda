@@ -126,4 +126,10 @@
 <style lang='scss'>
     @import '~@fullcalendar/core/main.css';
     @import '~@fullcalendar/daygrid/main.css';
+    .fc-icon-chevron-left:before {
+        content: "<";
+    }    
+    .fc-icon-chevron-right:before {
+        content: ">";
+    }
 </style>
