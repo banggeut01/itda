@@ -1,8 +1,8 @@
 <template>
   <tr @click="openRead">
-    <td class="text-center">{{study.stid}}</td>
+    <td class="text-center" id="response">{{study.stid}}</td>
     <td class="text-center" id="response">{{category1[study.stype-1]}}</td>
-    <td class="text-center">{{study.typeName}}</td>
+    <td class="text-center"><p class="mb-0" id="notOverLine">{{study.typeName}}</p></td>
     <td class="text-center" id="response">{{category2[study.sgroup-1]}}</td>
     <td class="text-left">{{study.stname}}</td>
     <td class="text-center"> {{study.pcnt}} / {{study.maxPcnt}}</td>
@@ -90,13 +90,15 @@ export default {
             })
         },
         exit() {
-            axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
-            .then(
-                ()=>{
-                    alert('스터디 탈퇴가 완료되었습니다.')
-                    this.getStudyDetail(this.study.stid)
-                    this.$emit('update')
-            })
+            if (confirm("탈퇴하시겠습니까?") == true){
+                axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudyGroup/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
+                .then(
+                    ()=>{
+                        alert('스터디 탈퇴가 완료되었습니다.')
+                        this.getStudyDetail(this.study.stid)
+                        this.$emit('update')
+                })
+            }
         },
         del() {
             axios.delete('https://i02b201.p.ssafy.io:8197/itda/api/deleteStudy/' + this.study.stid ,{'headers' : {"jwt-auth-token": localStorage.getItem("access_token")}})
@@ -135,6 +137,13 @@ export default {
     #response{
         display: none;
     }
+}
+#notOverLine{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
 }
 #cardtitle{
   overflow: hidden;

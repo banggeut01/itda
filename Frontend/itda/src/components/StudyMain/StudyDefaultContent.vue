@@ -5,11 +5,11 @@
                 <v-simple-table class="mx-auto" fixed-header>
                     <thead class="px-auto">
                         <tr>
-                            <th class="text-center">번호</th>
+                            <th class="text-center" id="response">번호</th>
                             <th class="text-center" id="response">스터디 종류</th>
-                            <th class="text-center">스터디 주제</th>
+                            <th class="text-center" style="width:calc(10rem+5vw)">스터디 주제</th>
                             <th class="text-center" id="response">스터디 내용</th>
-                            <th class="text-left" style="width:30vw">스터디 이름</th>
+                            <th class="text-left" style="width:calc(15rem+10vw)">스터디 이름</th>
                             <th class="text-center">인원/최대 인원 </th>
                         </tr>
                     </thead>
