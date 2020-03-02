@@ -1,6 +1,6 @@
 <template>
     <div>
-        <v-container>
+        <v-container v-if="userInfo">
             <v-row class="ml-0" align="center">
                 <p id="headStudy">{{study.stname}}</p>
                 <v-spacer></v-spacer>
@@ -55,27 +55,27 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr v-for="i in files.length" :key="i">
-                                    <td class="text-center">{{i}}</td>
-                                    <td class="text-center" @click="download(files[i-1].fileName)">{{files[i-1].fileName}}</td>
-                                    <td class="text-center">{{findPerson(files[i-1].uid)}}</td>
-                                    <td class="text-center">{{files[i-1].createdAt}}</td>
+                                <tr v-for="i in page*10>files.length?files.length-page*10+10:10" :key="i">
+                                    <td class="text-center">{{page*10 + i-10}}</td>
+                                    <td class="text-center" @click="download(files[page*10+i-11].fileName)" style="cursor:pointer">{{files[page*10+i-11].fileName}}</td>
+                                    <td class="text-center">{{findPerson(files[page*10+i-11].uid)}}</td>
+                                    <td class="text-center">{{files[page*10+i-11].createdAt}}</td>
                                     <td class="text-center">X</td>
                                 </tr>
                             </tbody>
                         </v-simple-table>
                     </v-row>
-                    <!-- <v-row class="mt-2" align="center" justify="center" >
+                    <v-row class="mt-2" align="center" justify="center" >
                         <v-btn text="text" class="mr-1 pa-0" @click="formerPage" width="10">
                             <v-icon>mdi-chevron-left</v-icon>
                         </v-btn>
                         <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1 pa-0" @click="goPage(pgNm)">
                             {{pgNm}}
                         </v-btn>
-                        <v-btn  text="text" class="ml-1 pa-0" @click="nextPage">
+                        <v-btn text="text" class="ml-1 pa-0" @click="nextPage">
                             <v-icon>mdi-chevron-right</v-icon>
                         </v-btn>
-                    </v-row> -->
+                    </v-row>
                 </v-data-iterator>
             </v-row>
             <v-row>
@@ -196,7 +196,7 @@
                     .then(response => {
                         this.study = response.data.study
                         this.meetings = response.data.meetings
-                        this.files = response.data.files
+                        // this.files = response.data.files
                         })
             },
             getPerson() {
@@ -219,6 +219,15 @@
                         router.push({name:"studymain"})
                     })
             },
+            nextPage () {
+                if (this.page + 1 <= this.numberOfPages) this.page += 1
+            },
+            formerPage () {
+                if (this.page - 1 >= 1) this.page -= 1
+            },
+            goPage(num) {
+                this.page = num
+            },
             
         },
         created() {
@@ -230,7 +239,7 @@
                 return require('../assets/NoPersonImg.png')
             },
             numberOfPages () {
-                return Math.ceil(this.studies.length / 10)
+                return Math.ceil(this.files.length / 10)
             },
             ...mapState(["userInfo"])
         }
