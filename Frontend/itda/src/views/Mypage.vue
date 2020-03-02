@@ -13,7 +13,7 @@
                         </v-row>
                         <v-row class="m-0">
                             <v-card width="500px">
-                                <v-card-title>비밀번호를 재확인 할께요</v-card-title>
+                                <v-card-title>비밀번호를 재확인</v-card-title>
                                 <v-card-text>
                                     <v-form ref="form" v-model="valid">
                                         <v-text-field v-model="formData.pw" @keydown.enter.prevent="validate"
