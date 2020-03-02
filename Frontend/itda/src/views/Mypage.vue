@@ -13,7 +13,7 @@
                         </v-row>
                         <v-row class="m-0">
                             <v-card width="500px">
-                                <v-card-title>비밀번호를 재확인</v-card-title>
+                                <v-card-title>비밀번호 확인</v-card-title>
                                 <v-card-text>
                                     <v-form ref="form" v-model="valid">
                                         <v-text-field v-model="formData.pw" @keydown.enter.prevent="validate"
@@ -25,9 +25,9 @@
                                     <v-spacer></v-spacer>
 
                                     <v-btn type="submit" text="text" color="success" class="mr-4" @click="validate">
-                                        submit</v-btn>
-                                    <v-btn color="blue darken-1" text="text" @click="reset">Reset</v-btn>
-                                    <v-btn color="blue darken-1" text="text" @click="close">Close</v-btn>
+                                        확인</v-btn>
+                                    <v-btn color="blue darken-1" text="text" @click="reset">다시 입력</v-btn>
+                                    <v-btn color="blue darken-1" text="text" @click="close">닫기</v-btn>
                                 </v-card-actions>
                             </v-card>
                         </v-row>
