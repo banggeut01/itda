@@ -120,9 +120,6 @@ public class StudyController {
 				return new ResponseEntity<Result>(r, HttpStatus.OK);
 			}
 			model.setCaptain(captain);
-			if (model.getStype() != 1 || model.getStype() != 2) {
-				model.setTypeFk(null);
-			}
 			int stid = studyService.createStudy(model);
 			StudyGroup sg = new StudyGroup();
 			sg.setStid(stid);
