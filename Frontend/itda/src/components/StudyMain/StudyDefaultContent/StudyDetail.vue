@@ -136,4 +136,42 @@ export default {
         display: none;
     }
 }
+#cardtitle{
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+}
+#stype2{
+  background: #FFD166;
+  color: #ffffff;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#sgroup2{
+  background: #06D6A0;
+  color: #ffffff;
+  margin-left: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
+
+#typename2{
+  background: #118AB2;
+  color: #ffffff;
+  margin-left: 10px;
+  font-size: 0.7rem;
+  margin-bottom: 0px;
+  border-radius: 10%;
+  padding-left: 10px;
+  padding-right: 10px;
+}
 </style>

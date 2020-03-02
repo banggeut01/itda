@@ -39,6 +39,37 @@
             <v-row class="ml-1 my-1">
                 <p id="studyMemberTitle">스터디 파일</p>
             </v-row>
+            <v-row class="ml-1 my-1">
+                <v-data-iterator :items="files" :page="page" hide-default-footer class="mx-auto">
+                    <v-row>
+                        <v-simple-table class="mx-auto" fixed-header>
+                            <thead class="px-auto">
+                                <tr>
+                                    <th class="text-center">작성자</th>
+                                    <th class="text-center">파일명</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td class="text-center">11</td>
+                                    <td class="text-center">11</td>
+                                </tr>
+                            </tbody>
+                        </v-simple-table>
+                    </v-row>
+                    <!-- <v-row class="mt-2" align="center" justify="center" >
+                        <v-btn text="text" class="mr-1 pa-0" @click="formerPage" width="10">
+                            <v-icon>mdi-chevron-left</v-icon>
+                        </v-btn>
+                        <v-btn v-for="pgNm in this.numberOfPages" :key="pgNm" text class="ml-1 pa-0" @click="goPage(pgNm)">
+                            {{pgNm}}
+                        </v-btn>
+                        <v-btn  text="text" class="ml-1 pa-0" @click="nextPage">
+                            <v-icon>mdi-chevron-right</v-icon>
+                        </v-btn>
+                    </v-row> -->
+                </v-data-iterator>
+            </v-row>
             <v-row>
                 <v-col cols="10">
                     <label for="fileUpload"></label>
@@ -93,6 +124,7 @@
                         '기타 등등'
                     ]
                 },
+                page:1,
             }
         },
         methods: {
@@ -119,6 +151,7 @@
                         axios.post("https://i02b201.p.ssafy.io:8197/itda/api/uploadFile", formdata, {params:{stid:this.study.stid}}, config)
                             .then(()=>{
                                 alert('파일 업로드가 완료되었습니다.'),
+                                this.uploadFile = null
                                 this.getStudy()
                             })
                     }
@@ -148,6 +181,9 @@
             getImgUrl() {
                 return require('../assets/NoPersonImg.png')
             },
+            numberOfPages () {
+                return Math.ceil(this.studies.length / 10)
+            }
         }
     }
 </script>
