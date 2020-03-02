@@ -36,7 +36,7 @@
           </v-row>
           <study-login-content :myStudyList="loginStudies" v-if="loginStudies.length" v-on:update="update"/>
           <v-row v-else>
-              <v-col>가입한 스터디가 없어요..</v-col>
+              <v-col>가입한 스터디가 없어요.</v-col>
           </v-row>
       </v-container>
       <v-container class="my-0" white>
